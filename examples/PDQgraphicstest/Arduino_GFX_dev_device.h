@@ -54,6 +54,7 @@
 // #define WAVESHARE_ESP32_S3_LCD_1_46
 // #define WAVESHARE_ESP32_S3_LCD_1_47
 // #define WAVESHARE_ESP32_S3_LCD_2_8
+#define WAVESHARE_ESP32_S3_Touch_LCD_4B // Smart86 Box
 // #define WAVESHARE_ESP32_S3_TOUCH_AMOLED_1_64
 // #define WAVESHARE_ESP32_S3_TOUCH_AMOLED_1_8
 // #define WAVESHARE_ESP32_S3_TOUCH_AMOLED_2_41
@@ -68,6 +69,22 @@
 // #define ZX3D95CE01S_AR
 // #define ZX3D95CE01S_TR
 // #define ZX7D00CE01S // or called "QM Smart Panlee 7.0 inch serial screen"
+
+#if defined(WAVESHARE_ESP32_S3_Touch_LCD_4B)
+#define GFX_DEV_DEVICE WAVESHARE_ESP32_S3_Touch_LCD_4B
+#define GFX_BL 38
+#define RGB_PANEL
+Arduino_ESP32RGBPanel *rgbpanel = new Arduino_ESP32RGBPanel(
+  17 /* DE */, 3 /* VSYNC */, 46 /* HSYNC */, 9 /* PCLK */,
+  10 /* B0 */, 11 /* B1 */, 12 /* B2 */, 13 /* B3 */, 14 /* B4 */,
+  21 /* G0 */, 8 /* G1 */, 18 /* G2 */, 45 /* G3 */, 38 /* G4 */, 39 /* G5 */,
+  40 /* R0 */, 41 /* R1 */, 42 /* R2 */, 2 /* R3 */, 1 /* R4 */,
+  1 /* hsync_polarity */, 10 /* hsync_front_porch */, 8 /* hsync_pulse_width */, 50 /* hsync_back_porch */,
+  1 /* vsync_polarity */, 10 /* vsync_front_porch */, 8 /* vsync_pulse_width */, 20 /* vsync_back_porch */);
+  
+Arduino_RGB_Display *gfx = new Arduino_RGB_Display(
+  480 /* width */, 480 /* height */, rgbpanel, 0 /* rotation */, true /* auto_flush */,
+  expander, GFX_NOT_DEFINED /* RST */, st7701_type10_init_operations, sizeof(st7701_type1_init_operations));
 
 #if defined(AD35_S3)
 #define GFX_DEV_DEVICE AD35_S3
