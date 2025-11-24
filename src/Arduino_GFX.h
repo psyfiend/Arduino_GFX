@@ -23,10 +23,10 @@
 #include "font/u8g2_font_chill7_h_cjk.h"
 #include "font/u8g2_font_cubic11_h_cjk.h"
 #include "font/u8g2_font_quan7_h_cjk.h"
-#include "font/u8g2_font_unifont_h_chinese.h"
-#include "font/u8g2_font_unifont_h_chinese4.h"
-#include "font/u8g2_font_unifont_h_cjk.h"
 #include "font/u8g2_font_unifont_h_utf8.h"
+#include "font/u8g2_font_unifont_t_chinese.h"
+#include "font/u8g2_font_unifont_t_chinese4.h"
+#include "font/u8g2_font_unifont_t_cjk.h"
 #endif
 
 #define RGB565(r, g, b) ((((r) & 0xF8) << 8) | (((g) & 0xFC) << 3) | ((b) >> 3))
@@ -180,6 +180,28 @@
 #define RGB565_WHITESMOKE RGB565(248, 244, 248)
 #define RGB565_YELLOW RGB565(248, 252, 0)
 #define RGB565_YELLOWGREEN RGB565(152, 204, 48)
+
+// Color definitions
+#ifndef DISABLE_COLOR_DEFINES
+#define BLACK RGB565_BLACK
+#define NAVY RGB565_NAVY
+#define DARKGREEN RGB565_DARKGREEN
+#define DARKCYAN RGB565_DARKCYAN
+#define MAROON RGB565_MAROON
+#define PURPLE RGB565_PURPLE
+#define OLIVE RGB565_OLIVE
+#define LIGHTGREY RGB565_LIGHTGREY
+#define DARKGREY RGB565_DARKGREY
+#define BLUE RGB565_BLUE
+#define GREEN RGB565_GREEN
+#define CYAN RGB565_CYAN
+#define RED RGB565_RED
+#define MAGENTA RGB565_MAGENTA
+#define YELLOW RGB565_YELLOW
+#define WHITE RGB565_WHITE
+#define ORANGE RGB565_ORANGE
+#define GREENYELLOW RGB565_GREENYELLOW
+#endif
 
 // Many (but maybe not all) non-AVR board installs define macros
 // for compatibility with existing PROGMEM-reading AVR code.

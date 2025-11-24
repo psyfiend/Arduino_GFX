@@ -44,17 +44,14 @@ bool Arduino_SH1106::begin(int32_t speed)
 {
   // printf("SH1106::begin()\n");
 
-  if (speed != GFX_SKIP_DATABUS_BEGIN)
+  if (!_bus)
   {
-    if (!_bus)
-    {
-      // printf("SH1106::bus not given\n");
-    }
-    else if (!_bus->begin(speed))
-    {
-      // printf("SH1106::bus not started");
-      return false;
-    }
+    // printf("SH1106::bus not given\n");
+  }
+  else if (!_bus->begin(speed))
+  {
+    // printf("SH1106::bus not started");
+    return false;
   }
 
   // printf("SH1106::Initialize Display\n");

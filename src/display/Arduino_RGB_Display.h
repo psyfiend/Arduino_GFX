@@ -2,8 +2,7 @@
 
 #include "../Arduino_DataBus.h"
 
-//#if defined(ESP32) && (CONFIG_IDF_TARGET_ESP32S3)
-#if defined(ESP32) && (CONFIG_IDF_TARGET_ESP32S3 || CONFIG_IDF_TARGET_ESP32P4)  //Modify
+#if defined(ESP32) && (CONFIG_IDF_TARGET_ESP32S3)
 
 #include "../Arduino_GFX.h"
 #include "../databus/Arduino_ESP32RGBPanel.h"
@@ -1565,9 +1564,9 @@ static const uint8_t st7701_type10_init_operations[] = {
     WRITE_C8_D8, 0x3A, 0x66, // 0x70 RGB888, 0x60 RGB666, 0x50 RGB565
 
     WRITE_COMMAND_8, 0x21,   // 0x20 normal, 0x21 IPS // Added by Waveshare
-	END_WRITE
+    END_WRITE,
 
-	DELAY, 120,
+    DELAY, 120,
 
     BEGIN_WRITE,
     WRITE_COMMAND_8, 0x29, // Display On

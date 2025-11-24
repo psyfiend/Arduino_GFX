@@ -164,7 +164,7 @@ void loop(void)
   if (h > w)
   {
     gfx->setTextSize(tsb);
-    gfx->setTextColor(RGB565_LIME);
+    gfx->setTextColor(RGB565_GREEN);
     gfx->print(F("\nBenchmark "));
     gfx->setTextSize(tsc);
     if (ds == 12)
@@ -193,7 +193,7 @@ void loop(void)
   if ((h > w) || (h > 240))
   {
     gfx->setTextSize(tsc);
-    gfx->setTextColor(RGB565_LIME);
+    gfx->setTextColor(RGB565_GREEN);
     gfx->print(F("\nBenchmark Complete!"));
   }
 
@@ -273,7 +273,7 @@ int32_t testFillScreen()
   // Shortened this tedious test!
   gfx->fillScreen(RGB565_WHITE);
   gfx->fillScreen(RGB565_RED);
-  gfx->fillScreen(RGB565_LIME);
+  gfx->fillScreen(RGB565_GREEN);
   gfx->fillScreen(RGB565_BLUE);
   gfx->fillScreen(RGB565_BLACK);
 
@@ -350,7 +350,7 @@ int32_t testText()
   gfx->println(F("Size 5"));
 
   gfx->setTextSize(6);
-  gfx->setTextColor(RGB565_LIME);
+  gfx->setTextColor(RGB565_GREEN);
   gfx->println(F("Size 6"));
 
   gfx->setTextSize(7);
@@ -362,7 +362,7 @@ int32_t testText()
   gfx->println(F("Size 8"));
 
   gfx->setTextSize(9);
-  gfx->setTextColor(RGB565_LIGHTPINK);
+  gfx->setTextColor(RGB565_PALERED);
   gfx->println(F("Size 9"));
 
   return micros() - start;
@@ -520,7 +520,7 @@ int32_t testRects()
   for (i = 2; i < n; i += 6)
   {
     i2 = i / 2;
-    gfx->drawRect(cx - i2, cy - i2, i, i, RGB565_LIME);
+    gfx->drawRect(cx - i2, cy - i2, i, i, RGB565_GREEN);
   }
 
   return micros() - start;
