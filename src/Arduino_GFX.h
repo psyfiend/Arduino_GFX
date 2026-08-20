@@ -201,6 +201,7 @@
 #define WHITE RGB565_WHITE
 #define ORANGE RGB565_ORANGE
 #define GREENYELLOW RGB565_GREENYELLOW
+#define PALERED RGB565_PALERED
 #endif
 
 // Many (but maybe not all) non-AVR board installs define macros

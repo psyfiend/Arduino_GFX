@@ -1,0 +1,16 @@
+{
+	"name": "GFX Library for Arduino",
+	"version": "1.6.0",
+	"keywords": "graphics, gui, embedded, tft, lcd, gfx",
+	"description": "Arduino_GFX is a GFX library for various color displays with various data bus interfaces",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/psyfiend/Arduino_GFX.git"
+	},
+	"build": {
+		"includeDir": "."
+	},
+	"homepage": "https://github.com/moononournation/Arduino_GFX",
+	"frameworks": "*",
+	"platforms": "*"
+}

@@ -71,8 +71,8 @@ uint16_t *Arduino_ESP32RGBPanel::getFrameBuffer(int16_t w, int16_t h)
 #if (!defined(ESP_ARDUINO_VERSION_MAJOR)) || (ESP_ARDUINO_VERSION_MAJOR < 3)
 #else
       .bits_per_pixel = 16,
-      .num_fbs = 1,
-      .bounce_buffer_size_px = _bounce_buffer_size_px,
+      .num_fbs = 2, // 1,
+      .bounce_buffer_size_px = 480 * 20,  // _bounce_buffer_size_px,
 #endif
       .sram_trans_align = 8,
       .psram_trans_align = 64,
