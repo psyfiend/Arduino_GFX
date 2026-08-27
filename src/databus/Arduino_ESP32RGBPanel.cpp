@@ -72,7 +72,16 @@ uint16_t *Arduino_ESP32RGBPanel::getFrameBuffer(int16_t w, int16_t h)
 #else
       .bits_per_pixel = 16,
       .num_fbs = 2, // 1,
-      .bounce_buffer_size_px = 480 * 20,  // _bounce_buffer_size_px,
+      // Was hardcoded to 480 * 20 (=9600), ignoring the _bounce_buffer_size_px
+      // constructor param entirely. That value divides evenly into 480px and
+      // 800px panel widths (20 and 12 full scanlines respectively) - the only
+      // widths any board using this class had ever run at - but doesn't
+      // divide evenly into 1024px (9.375 scanlines), which the ESP-IDF RGB
+      // panel driver requires (bounce_buffer_size_px must be a whole multiple
+      // of h_res). Now respects the actual parameter, which DisplayManager
+      // threads through from each board's BSP (Fleet_BSP.h's
+      // BOUNCE_BUFFER_SIZE_PX field).
+      .bounce_buffer_size_px = _bounce_buffer_size_px,
 #endif
       .sram_trans_align = 8,
       .psram_trans_align = 64,
