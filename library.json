@@ -8,7 +8,11 @@
 		"url": "https://github.com/psyfiend/Arduino_GFX.git"
 	},
 	"build": {
-		"includeDir": "."
+		"includeDir": ".",
+		"srcFilter": [
+			"+<*>",
+			"-<databus/Arduino_ESP32SPIDMA.cpp>"
+		]
 	},
 	"homepage": "https://github.com/moononournation/Arduino_GFX",
 	"frameworks": "*",
