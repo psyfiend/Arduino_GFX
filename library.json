@@ -11,7 +11,8 @@
 		"includeDir": ".",
 		"srcFilter": [
 			"+<*>",
-			"-<databus/Arduino_ESP32SPIDMA.cpp>"
+			"-<databus/Arduino_ESP32SPIDMA.cpp>",
+			"-<databus/Arduino_ESP32SPI.cpp>"
 		]
 	},
 	"homepage": "https://github.com/moononournation/Arduino_GFX",
