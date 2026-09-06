@@ -38,7 +38,9 @@ public:
   Arduino_ESP32DSIPanel(
       uint32_t hsync_pulse_width, uint32_t hsync_back_porch, uint32_t hsync_front_porch,
       uint32_t vsync_pulse_width, uint32_t vsync_back_porch, uint32_t vsync_front_porch,
-      uint32_t prefer_speed = GFX_NOT_DEFINED,uint32_t lane_bit_rate = DEFAULT_MIPI_DSI_LANE_BIT_RATE_MBPS /*新增成员变量*/);
+      uint32_t prefer_speed = GFX_NOT_DEFINED,uint32_t lane_bit_rate = DEFAULT_MIPI_DSI_LANE_BIT_RATE_MBPS /*新增成员变量*/,
+      uint8_t phy_clk_src = 0 /* Fleet: 0 = keep this library's PLL_F20M default */,
+      uint8_t num_fb = 0 /* Fleet: 0 = keep this library's default of 1 */);
 
   bool begin(int16_t w, int16_t h, int32_t speed = GFX_NOT_DEFINED, const lcd_init_cmd_t *init_operations = NULL, size_t init_operations_len = GFX_NOT_DEFINED);
 
@@ -54,6 +56,8 @@ private:
   uint32_t _vsync_front_porch;
   uint32_t _prefer_speed;
   uint32_t _lane_bit_rate; // 新增成员变量
+  uint8_t _phy_clk_src;   // Fleet: BSP_PHY_CLK_SRC_* selector; 0 = unchanged
+  uint8_t _num_fb;        // Fleet: DPI framebuffer count; 0 = unchanged (1)
 
   esp_lcd_panel_handle_t _panel_handle = NULL;
 };

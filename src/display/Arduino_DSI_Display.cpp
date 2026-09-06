@@ -10,11 +10,13 @@
 Arduino_DSI_Display::Arduino_DSI_Display(
     int16_t w, int16_t h, Arduino_ESP32DSIPanel *dsipanel, uint8_t r, bool auto_flush,
     int8_t rst, const lcd_init_cmd_t *init_operations, size_t init_operations_len,
-    uint8_t col_offset1, uint8_t row_offset1, uint8_t col_offset2, uint8_t row_offset2)
+    uint8_t col_offset1, uint8_t row_offset1, uint8_t col_offset2, uint8_t row_offset2,
+    uint8_t rst_active_high /* Fleet */)
     : Arduino_GFX(w, h), _dsipanel(dsipanel), _auto_flush(auto_flush),
       _rst(rst), _init_operations(init_operations), _init_operations_len(init_operations_len),
       COL_OFFSET1(col_offset1), ROW_OFFSET1(row_offset1),
-      COL_OFFSET2(col_offset2), ROW_OFFSET2(row_offset2)
+      COL_OFFSET2(col_offset2), ROW_OFFSET2(row_offset2),
+      _rst_active_high(rst_active_high) /* Fleet */
 {
   _fb_width = COL_OFFSET1 + WIDTH + COL_OFFSET2;
   _fb_height = ROW_OFFSET1 + HEIGHT + ROW_OFFSET2;
@@ -31,12 +33,28 @@ bool Arduino_DSI_Display::begin(int32_t speed)
   if (_rst != GFX_NOT_DEFINED)
   {
     pinMode(_rst, OUTPUT);
-    digitalWrite(_rst, HIGH);
-    delay(5);
-    digitalWrite(_rst, LOW);
-    delay(10);
-    digitalWrite(_rst, HIGH);
-    delay(120);
+    if (_rst_active_high)
+    {
+      // Active-HIGH reset (e.g. Waveshare P4-5 HX8394): assert = HIGH, release = LOW.
+      // Mirrors esp_lcd panel_hx8394_reset - release, assert 10ms, release, settle 120ms.
+      // The generic active-low sequence below would leave this panel asserted forever.
+      digitalWrite(_rst, LOW);
+      delay(10);
+      digitalWrite(_rst, HIGH);
+      delay(10);
+      digitalWrite(_rst, LOW);
+      delay(120);
+    }
+    else
+    {
+      digitalWrite(_rst, HIGH);
+      delay(5);
+      digitalWrite(_rst, LOW);
+      delay(10);
+      digitalWrite(_rst, HIGH);
+      delay(120);
+    }
+    ESP_LOGI(TAG, "panel reset done (active %s)", _rst_active_high ? "HIGH" : "LOW");
   }
 
   _dsipanel->begin(_fb_width, _fb_height, speed, _init_operations, _init_operations_len);

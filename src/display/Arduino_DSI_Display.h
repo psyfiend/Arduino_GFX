@@ -416,7 +416,8 @@ public:
   Arduino_DSI_Display(
       int16_t w, int16_t h, Arduino_ESP32DSIPanel *dsipanel, uint8_t r = 0, bool auto_flush = true,
       int8_t rst = GFX_NOT_DEFINED, const lcd_init_cmd_t *init_operations = NULL, size_t init_operations_len = GFX_NOT_DEFINED,
-      uint8_t col_offset1 = 0, uint8_t row_offset1 = 0, uint8_t col_offset2 = 0, uint8_t row_offset2 = 0);
+      uint8_t col_offset1 = 0, uint8_t row_offset1 = 0, uint8_t col_offset2 = 0, uint8_t row_offset2 = 0,
+      uint8_t rst_active_high = 0 /* Fleet: 0 = generic active-LOW reset */);
 
   bool begin(int32_t speed = GFX_NOT_DEFINED) override;
   void writePixelPreclipped(int16_t x, int16_t y, uint16_t color) override;
@@ -439,6 +440,7 @@ protected:
   Arduino_ESP32DSIPanel *_dsipanel;
   bool _auto_flush;
   int8_t _rst;
+  uint8_t _rst_active_high; // Fleet: 0 = active LOW (default), 1 = active HIGH
   const lcd_init_cmd_t *_init_operations;
   size_t _init_operations_len;
   int16_t MAX_X, MAX_Y;
