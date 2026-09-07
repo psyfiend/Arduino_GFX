@@ -52,7 +52,9 @@ bool Arduino_ESP32DSIPanel::begin(int16_t w, int16_t h, int32_t speed, const lcd
   case 5: phy_src = MIPI_DSI_PHY_PLLREF_CLK_SRC_XTAL; break;
   default: break; // 0 / unknown -> library default above
   }
+#ifdef DEBUG_DISPLAY
   ESP_LOGI(TAG, "PHY PLL ref clk: BSP selector=%u -> enum %d", (unsigned)_phy_clk_src, (int)phy_src);
+#endif
 
   esp_lcd_dsi_bus_config_t bus_config = {
       .bus_id = 0,
@@ -71,9 +73,13 @@ bool Arduino_ESP32DSIPanel::begin(int16_t w, int16_t h, int32_t speed, const lcd
       .lcd_param_bits = 8,
   };
   esp_lcd_panel_io_handle_t io_handle = NULL;
+#ifdef DEBUG_DISPLAY
   ESP_LOGI(TAG, "STEP -> esp_lcd_new_panel_io_dbi");
+#endif
   ESP_ERROR_CHECK(esp_lcd_new_panel_io_dbi(mipi_dsi_bus, &dbi_config, &io_handle));
+#ifdef DEBUG_DISPLAY
   ESP_LOGI(TAG, "STEP dbi-io done");
+#endif
 
   esp_lcd_dpi_panel_config_t dpi_config = {
       .virtual_channel = 0,
@@ -102,15 +108,20 @@ bool Arduino_ESP32DSIPanel::begin(int16_t w, int16_t h, int32_t speed, const lcd
   };
 
   // Create MIPI DPI panel
+#ifdef DEBUG_DISPLAY
   ESP_LOGI(TAG, "STEP -> esp_lcd_new_panel_dpi (fbs=%d[BSP=%u], %dx%d @ %luMHz)", dpi_config.num_fbs, (unsigned)_num_fb, (int)w, (int)h, (unsigned long)(speed/1000000));
+#endif
   ESP_ERROR_CHECK(esp_lcd_new_panel_dpi(mipi_dsi_bus, &dpi_config, &_panel_handle));
+#ifdef DEBUG_DISPLAY
   ESP_LOGI(TAG, "STEP dpi-panel done");
-
   ESP_LOGI(TAG, "STEP -> init cmd loop (%u cmds)", (unsigned)init_operations_len);
+#endif
   for (int i = 0; i < init_operations_len; i++)
   {
     // Send command
+#ifdef DEBUG_DISPLAY
     ESP_LOGI(TAG, "  cmd[%d] = 0x%02X", i, (unsigned)init_operations[i].cmd);
+#endif
     ESP_ERROR_CHECK(esp_lcd_panel_io_tx_param(io_handle, init_operations[i].cmd, init_operations[i].data, init_operations[i].data_bytes));
     vTaskDelay(pdMS_TO_TICKS(init_operations[i].delay_ms));
   }

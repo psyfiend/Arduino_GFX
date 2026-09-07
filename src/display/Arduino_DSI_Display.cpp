@@ -54,7 +54,12 @@ bool Arduino_DSI_Display::begin(int32_t speed)
       digitalWrite(_rst, HIGH);
       delay(120);
     }
+#ifdef DEBUG_DISPLAY
+    // Reports which reset branch actually ran, so a stale build_cache object is
+    // visible immediately rather than looking like a failed experiment. See
+    // CLAUDE.md "PlatformIO build cache can silently ignore BSP header edits".
     ESP_LOGI(TAG, "panel reset done (active %s)", _rst_active_high ? "HIGH" : "LOW");
+#endif
   }
 
   _dsipanel->begin(_fb_width, _fb_height, speed, _init_operations, _init_operations_len);
